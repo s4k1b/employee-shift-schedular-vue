@@ -9,3 +9,13 @@ export async function signup$api(ctx: Record<string, string>) {
     return [, e]
   }
 }
+
+export async function signin$api(ctx: Record<string, string>) {
+  try {
+    const resp = await $axios.post("/auth/login", ctx);
+    return [resp.data]
+  } catch(e) {
+    // eslint-disable-next-line no-sparse-arrays
+    return [, e]
+  }
+}

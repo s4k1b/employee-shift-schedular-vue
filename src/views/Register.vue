@@ -3,14 +3,11 @@ import { ref } from 'vue';
 import {signup$api} from '../api/signup-signin'
 import type { VForm } from 'vuetify/components';
 import {required, email as emailValidation, minLength} from "../plugins/validation-rules"
+import {useSnackbar} from "../composables/snackbar"
 
 const form = ref<VForm | null>(null);
 
-const snackbar = ref({
-  show: false,
-  message: "",
-  color: "info"
-})
+const {snackbar, showSnackbar} = useSnackbar()
 
 const name = ref('');
 const email = ref('')
@@ -28,13 +25,10 @@ async function signup() {
         password: password.value
       }
       const [resp, error] = await signup$api(ctx)
-      snackbar.value.show = true;
       if(!error) {
-        snackbar.value.message = resp.msg
-        snackbar.value.color = 'success'
+        showSnackbar('success', resp.msg)
       } else {
-        snackbar.value.message = error.response?.data?.errors || error.message
-        snackbar.value.color = 'error'
+        showSnackbar('error', error.response?.data?.msg || error.message)
       }
     }
   }
