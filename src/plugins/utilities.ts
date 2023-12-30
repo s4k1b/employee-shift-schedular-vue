@@ -1,4 +1,4 @@
-import { isAxiosError } from "node_modules/axios/index.cjs"
+import { isAxiosError } from "axios"
 
 export function extractErrorMessage(e: unknown) {
   if(isAxiosError(e)) {
