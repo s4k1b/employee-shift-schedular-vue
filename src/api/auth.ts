@@ -18,3 +18,12 @@ export async function signin$api(ctx: Record<string, string>) {
     return [, extractErrorMessage(e)]
   }
 }
+
+export async function signout$api() {
+  try {
+    const resp = await $axios.post('/auth/logout');
+    return [resp.data?.msg]
+  } catch(e) {
+    return [, extractErrorMessage(e)]
+  }
+}

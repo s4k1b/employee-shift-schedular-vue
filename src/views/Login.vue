@@ -2,12 +2,17 @@
 import { signin$api } from '../api/auth'
 import { useSnackbar } from '@/composables/snackbar';
 import { required, email as emailValidation } from '@/plugins/validation-rules';
+import { useUserStore } from '@/stores/user';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const { snackbar, showSnackbar } = useSnackbar()
 
 const email = ref('');
 const password = ref('')
+
+const router = useRouter();
+const storeUser = useUserStore();
 
 async function login() {
   const [resp, error] = await signin$api({ email: email.value, password: password.value })
@@ -15,6 +20,12 @@ async function login() {
     showSnackbar('error', error)
   } else {
     showSnackbar('success', resp)
+
+    // clear old store user and status
+    storeUser.clearUser()
+    
+    // redirect to home page
+    router.push('/')
   }
 }
 </script>

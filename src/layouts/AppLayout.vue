@@ -1,6 +1,12 @@
+<script setup lang="ts">
+import User from "../components/navbar/User.vue"
+</script>
+
 <template>
   <v-layout class="rounded rounded-md">
-    <v-app-bar title="Task Schedular"></v-app-bar>
+    <v-app-bar title="Task Schedular">
+      <user />
+    </v-app-bar>
 
     <v-navigation-drawer>
       <v-list>
